@@ -61,30 +61,7 @@ char    *ft_strchr_mod(char *str)
     tab[y] = '\0';
     return (tab);
 }
-// char	*ft_strjoin(char *s1, char *s2)
-// {
-// 	size_t	i;
-// 	size_t	j;
-// 	char	*ptr;
-// 	size_t	k;
 
-// 	k = ft_strlen(s1);
-// 	i = 0;
-// 	j = 0;
-// 	ptr = malloc(sizeof(char) * (k + ft_strlen(s2) + 1));
-// 	if (!ptr)
-// 		return (NULL);
-// 	while (s1 && i < k)
-// 	{
-// 		ptr[i] = s1[i];
-// 		i++;
-// 	}
-// 	while (s2 && i < ft_strlen(s2) + k)
-// 		ptr[i++] = s2[j++];
-// 	ptr[i] = '\0';
-// 	free(s1);
-// 	return (ptr);
-// }
 char *ft_strjoin(char *str, char *str1)
 {
 	int i;
@@ -96,12 +73,12 @@ char *ft_strjoin(char *str, char *str1)
 	tab = malloc(sizeof(char) * (ft_strlen(str)+ ft_strlen(str1)) + 1);
 	if (!tab)
 		return (NULL);
-	while (str[i] && i < ft_strlen(str))
+	while (str[i] && (i < ft_strlen(str)))
 	{
 		tab[i] = str[i];
 		i++;
 	}
-	while (str1[y] && (i + y) < (ft_strlen(str1) + ft_strlen(str)))
+	while (str1[y] && ((i + y) < (ft_strlen(str1) + ft_strlen(str))))
 	{
 		tab[i + y] = str1[y];
 		y++;
@@ -123,7 +100,7 @@ char *get_line(char *str, int fd)
 	while (1)
 	{
 		r = read(fd, read_buff, BUFFER_SIZE);
-		if (r == 0)
+		if (r == 0)//fichier txt fini
 			break ;
 		if (r == -1) //si erreur de read
 		{
@@ -133,7 +110,7 @@ char *get_line(char *str, int fd)
         }
 		read_buff[r] = '\0';
 		str = ft_strjoin(str, read_buff);
-		if (check_end_line(str) == 1)
+		if (check_end_line(str) == 1) //arrive au \n
 			break;
 	}
 	free(read_buff);
@@ -168,7 +145,6 @@ char *get_the_line(char *line)
 }
 char *get_next_line(int fd)
 {
-	// char *tab;
 	static char *stash;
 	char *next_line;
 	char *odd_stash;
@@ -190,7 +166,7 @@ int main(void) {
     char *line;
 
     // Ouvrir le fichier en lecture seule
-    fd = open("fable.txt", O_RDONLY);
+    fd = open("al-Ahzab.txt", O_RDONLY);
     if (fd == -1) {
         perror("Erreur lors de l'ouverture du fichier");
         return 1;
@@ -198,7 +174,7 @@ int main(void) {
 
     // Lire et afficher chaque ligne du fichier
     while ((line = get_next_line(fd)) != NULL) {
-        printf("%s\n", line);
+        printf("%s", line);
         // Libérer la mémoire allouée par get_next_line (si nécessaire)
         free(line);
     }
